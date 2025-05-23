@@ -19,14 +19,6 @@
             <artifactId>mongodb-driver-sync</artifactId>
             <version>4.11.0</version>
         </dependency>
-
-        <!-- Servidor HTTP embebido -->
-        <dependency>
-            <groupId>com.sun.net.httpserver</groupId>
-            <artifactId>http</artifactId>
-            <version>20070405</version>
-            <scope>system</scope>
-            <systemPath>${java.home}/../lib/rt.jar</systemPath>
-        </dependency>
     </dependencies>
 </project>
+
