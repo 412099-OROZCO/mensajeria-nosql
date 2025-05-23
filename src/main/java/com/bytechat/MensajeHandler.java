@@ -1,3 +1,5 @@
+package com.bytechat;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.sun.net.httpserver.HttpExchange;

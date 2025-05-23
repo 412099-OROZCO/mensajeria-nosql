@@ -1,3 +1,5 @@
+package com.bytechat;
+
 public class Mensaje {
     public String usuario;
     public String contenido;
