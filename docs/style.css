@@ -110,3 +110,17 @@ footer {
   position: absolute;
   left: -9999px;
 }
+
+#chat img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 5px;
+  box-shadow: 0 0 5px rgba(0, 230, 230, 0.3);
+}
+
+#chat small {
+  font-size: 0.8rem;
+  color: #999;
+  margin-left: 6px;
+}

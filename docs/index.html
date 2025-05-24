@@ -30,9 +30,12 @@
       </div>
 
       <!-- Formulario de mensaje -->
-      <form onsubmit="event.preventDefault(); enviarMensaje();" class="d-flex gap-2">
-        <input id="mensaje" type="text" class="form-control" placeholder="Escribe tu mensaje" autocomplete="off" required />
-        <button id="btn-enviar" type="submit" class="btn btn-info text-dark fw-bold">Enviar</button>
+      <form onsubmit="event.preventDefault(); enviarMensaje();" class="mb-3">
+        <div class="mb-2 d-flex gap-2">
+          <input id="mensaje" type="text" class="form-control" placeholder="Escribe tu mensaje" autocomplete="off" required />
+          <button id="btn-enviar" type="submit" class="btn btn-info text-dark fw-bold">Enviar</button>
+        </div>
+        <input id="imagen" type="text" class="form-control" placeholder="URL de imagen (opcional)" />
       </form>
     </div>
 

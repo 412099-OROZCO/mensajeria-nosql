@@ -1,15 +1,18 @@
 package com.bytechat;
 
 public class Mensaje {
-    public String usuario;
-    public String contenido;
+    private String usuario;
+    private String contenido;
+    private String fechaHora;      // 🕒 Hora del mensaje
+    private String imagenUrl;      // 🖼️ URL de imagen (opcional)
 
-    // Constructor vacío requerido por Gson
     public Mensaje() {}
 
-    public Mensaje(String usuario, String contenido) {
+    public Mensaje(String usuario, String contenido, String fechaHora, String imagenUrl) {
         this.usuario = usuario;
         this.contenido = contenido;
+        this.fechaHora = fechaHora;
+        this.imagenUrl = imagenUrl;
     }
 
     public String getUsuario() {
@@ -20,6 +23,14 @@ public class Mensaje {
         return contenido;
     }
 
+    public String getFechaHora() {
+        return fechaHora;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
@@ -27,4 +38,13 @@ public class Mensaje {
     public void setContenido(String contenido) {
         this.contenido = contenido;
     }
+
+    public void setFechaHora(String fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
 }
+

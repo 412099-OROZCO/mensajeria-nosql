@@ -1,34 +1,37 @@
 // Lista de usuarios conectados (simulado)
 const usuarios = ["Carlos", "Ana", "Luis", "Romina"];
 
-// Lista de mensajes simulada (en memoria)
-let mensajes = [
-    { usuario: "Carlos", contenido: "¡Hola a todos!" },
-    { usuario: "Ana", contenido: "Hola Carlos 👋" }
-];
-
-// Modo demostración (sin backend)
+// Modo demostración
 const MODO_OFFLINE = false;
 
 // Función para enviar mensaje
 function enviarMensaje() {
-    const texto = document.getElementById('mensaje').value;
+    const texto = document.getElementById('mensaje').value.trim();
+    const imagen = document.getElementById('imagen').value.trim();
 
-    if (texto.trim() === "") return;
+    if (!texto && !imagen) return;
 
     if (MODO_OFFLINE) {
-        mensajes.push({ usuario: "Carlos", contenido: texto });
+        mensajes.push({ usuario: "Carlos", contenido: texto, imagenUrl: imagen, fechaHora: new Date().toLocaleTimeString() });
         document.getElementById('mensaje').value = '';
+        document.getElementById('imagen').value = '';
         cargarMensajes();
         return;
     }
 
+    const mensaje = {
+        usuario: "Carlos",
+        contenido: texto,
+        imagenUrl: imagen
+    };
+
     fetch('/api/mensajes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario: "Carlos", contenido: texto })
+        body: JSON.stringify(mensaje)
     }).then(() => {
         document.getElementById('mensaje').value = '';
+        document.getElementById('imagen').value = '';
         cargarMensajes();
     }).catch(error => {
         console.error("Error al enviar mensaje:", error);
@@ -42,7 +45,11 @@ function cargarMensajes() {
     if (MODO_OFFLINE) {
         chat.innerHTML = '';
         mensajes.forEach(m => {
-            chat.innerHTML += `<div><strong>${m.usuario}:</strong> ${m.contenido}</div>`;
+            chat.innerHTML += `
+                <div class="mb-2">
+                    <strong>${m.usuario}</strong> [${m.fechaHora || '--:--'}]: ${m.contenido}
+                    ${m.imagenUrl ? `<br><img src="${m.imagenUrl}" alt="imagen" style="max-width: 200px; border-radius: 8px; margin-top: 5px;">` : ''}
+                </div>`;
         });
         return;
     }
@@ -52,7 +59,11 @@ function cargarMensajes() {
         .then(data => {
             chat.innerHTML = '';
             data.forEach(m => {
-                chat.innerHTML += `<div><strong>${m.usuario}:</strong> ${m.contenido}</div>`;
+                chat.innerHTML += `
+                    <div class="mb-2">
+                        <strong>${m.usuario}</strong> [${m.fechaHora || '--:--'}]: ${m.contenido}
+                        ${m.imagenUrl ? `<br><img src="${m.imagenUrl}" alt="imagen" style="max-width: 200px; border-radius: 8px; margin-top: 5px;">` : ''}
+                    </div>`;
             });
         })
         .catch(error => {
@@ -80,4 +91,5 @@ document.addEventListener("DOMContentLoaded", () => {
         setInterval(cargarMensajes, 2000);
     }
 });
+
 
