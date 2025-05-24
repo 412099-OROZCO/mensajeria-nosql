@@ -1,9 +1,7 @@
 services:
   - type: web
     name: bytechat-g8
-    env: java
-    buildCommand: "mvn clean package"
-    startCommand: "java -cp target/classes com.bytechat.Main"
+    env: docker
     envVars:
       - key: MONGO_URI
-        sync: false
+        sync: false  # Render tomará el valor desde su panel
