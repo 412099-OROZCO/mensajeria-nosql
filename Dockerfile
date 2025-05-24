@@ -6,10 +6,10 @@ COPY src ./src
 COPY docs ./docs
 RUN mvn clean package
 
-# Etapa 2: Ejecutar el JAR ensamblado
-FROM eclipse-temurin:17-jdk
+# Etapa 2: Ejecutar el JAR ensamblado usando base confiable
+FROM openjdk:17-slim
 
-# ✅ Instalamos certificados raíz para conexiones HTTPS/TLS (MongoDB Atlas)
+# Instalar certificados necesarios (aunque esta base ya los suele tener)
 RUN apt-get update && apt-get install -y ca-certificates && apt-get clean
 
 WORKDIR /app
@@ -17,9 +17,6 @@ COPY --from=build /app/target/mensajeria-nosql-1.0-SNAPSHOT-jar-with-dependencie
 COPY --from=build /app/docs /app/docs
 
 EXPOSE 8080
-
-# ✅ Forzar TLSv1.2
 CMD ["java", "-Dhttps.protocols=TLSv1.2", "-jar", "app.jar"]
-
 
 
