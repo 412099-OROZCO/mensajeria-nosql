@@ -17,6 +17,9 @@ COPY --from=build /app/target/mensajeria-nosql-1.0-SNAPSHOT-jar-with-dependencie
 COPY --from=build /app/docs /app/docs
 
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+
+# ✅ Forzar TLSv1.2
+CMD ["java", "-Dhttps.protocols=TLSv1.2", "-jar", "app.jar"]
+
 
 
