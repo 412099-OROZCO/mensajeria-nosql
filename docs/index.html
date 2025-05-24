@@ -2,15 +2,81 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Chat sencillo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Un mini sistema de chat usando Java y MongoDB" />
+  <title>ByteChat-G8</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <h1>Mini Chat</h1>
-  <div id="chat"></div>
-  <input id="mensaje" type="text" placeholder="Escribe tu mensaje" />
-  <button onclick="enviarMensaje()">Enviar</button>
+<body class="bg-dark text-light">
 
-  <script src="script.js"></script>
+<!-- Header con logo -->
+<header class="bg-black text-center py-4 border-bottom border-info mb-4">
+  <img src="logo-bytechat.png" alt="Logo ByteChat-G8" width="100" class="mb-2 bg-white rounded p-1">
+  <h1 class="h3 text-info fw-bold">ByteChat-G8</h1>
+  <p class="text-muted mb-0">Proyecto básico con Java + MongoDB</p>
+</header>
+
+<!-- Modal para ingresar nickname -->
+<div id="nicknameModal" class="modal d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.85); z-index: 9999;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light border border-info shadow-lg">
+      <div class="modal-header border-info">
+        <h5 class="modal-title text-info">Bienvenido a ByteChat-G8</h5>
+      </div>
+      <div class="modal-body">
+        <p>Ingresa tu nombre o apodo para unirte al chat:</p>
+        <input type="text" id="nicknameInput" class="form-control" placeholder="Tu apodo..." autofocus />
+      </div>
+      <div class="modal-footer border-info">
+        <button type="button" class="btn btn-info fw-bold text-dark" onclick="confirmarNickname()">Entrar al chat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contenedor principal -->
+<main class="container">
+  <div class="row">
+    <!-- Columna del chat -->
+    <div class="col-md-8">
+      <div class="card bg-secondary mb-3">
+        <div class="card-header bg-info text-dark fw-bold">Chat</div>
+        <div id="chat" class="card-body overflow-auto" style="height: 300px;" aria-live="polite" tabindex="0"></div>
+      </div>
+
+      <!-- Formulario de mensaje -->
+      <form onsubmit="event.preventDefault(); enviarMensaje();" class="mb-3">
+        <div class="mb-2 d-flex gap-2">
+          <input id="mensaje" type="text" class="form-control" placeholder="Escribe tu mensaje" autocomplete="off" required />
+          <button id="btn-enviar" type="submit" class="btn btn-info text-dark fw-bold">Enviar</button>
+        </div>
+        <input id="imagen" type="text" class="form-control" placeholder="URL de imagen (opcional)" />
+      </form>
+    </div>
+
+    <!-- Columna de usuarios -->
+    <div class="col-md-4">
+      <div class="card bg-dark text-light">
+        <div class="card-header bg-info text-dark fw-bold">Usuarios conectados</div>
+        <ul id="usuarios" class="list-group list-group-flush">
+          <!-- Lista dinámica -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center mt-4">
+  <p class="small text-muted">&copy; 2025 - Proyecto académico de mensajería - Grupo 8</p>
+</footer>
+
+<!-- JS -->
+<script src="script.js?v=demo1"></script>
 </body>
 </html>
+
+
