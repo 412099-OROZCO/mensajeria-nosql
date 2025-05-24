@@ -14,6 +14,7 @@ public class Main {
 
         // Ruta para API
         server.createContext("/api/mensajes", new MensajeHandler());
+        server.createContext("/api/usuarios", new UsuarioHandler()); // ✅ nuevo handler
 
         // Ruta para frontend en /docs
         server.createContext("/", (HttpExchange exchange) -> {
