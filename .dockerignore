@@ -1,0 +1,20 @@
+# Ignorar la carpeta de salida de compilación
+target/
+out/
+.idea/
+.vscode/
+
+# Archivos temporales
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno sensibles
+.env
+.env.local
+.env.*
