@@ -8,7 +8,7 @@ let mensajes = [
 ];
 
 // Modo demostración (sin backend)
-const MODO_OFFLINE = true;
+const MODO_OFFLINE = false;
 
 // Función para enviar mensaje
 function enviarMensaje() {

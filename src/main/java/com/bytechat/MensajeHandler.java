@@ -5,11 +5,13 @@ import com.mongodb.client.MongoDatabase;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.bson.Document;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MensajeHandler implements HttpHandler {
+
     private final MongoCollection<Document> collection;
 
     public MensajeHandler() {
@@ -19,23 +21,42 @@ public class MensajeHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if ("POST".equals(exchange.getRequestMethod())) {
-            InputStream is = exchange.getRequestBody();
-            String json = new String(is.readAllBytes());
-            Document doc = Document.parse(json);
-            collection.insertOne(doc);
-            exchange.sendResponseHeaders(200, 0);
-            exchange.getResponseBody().write("Guardado".getBytes());
-            exchange.close();
-        } else if ("GET".equals(exchange.getRequestMethod())) {
-            List<String> mensajes = new ArrayList<>();
-            for (Document doc : collection.find()) {
-                mensajes.add(doc.toJson());
+        try {
+            String method = exchange.getRequestMethod();
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().add("Content-Type", "application/json");
+
+            if ("POST".equalsIgnoreCase(method)) {
+                InputStream is = exchange.getRequestBody();
+                String json = new String(is.readAllBytes());
+                Document doc = Document.parse(json);
+                collection.insertOne(doc);
+                String respuesta = "{\"mensaje\":\"Guardado con éxito\"}";
+                byte[] bytes = respuesta.getBytes();
+                exchange.sendResponseHeaders(200, bytes.length);
+                exchange.getResponseBody().write(bytes);
+            } else if ("GET".equalsIgnoreCase(method)) {
+                List<String> mensajes = new ArrayList<>();
+                for (Document doc : collection.find()) {
+                    mensajes.add(doc.toJson());
+                }
+                String response = "[" + String.join(",", mensajes) + "]";
+                byte[] bytes = response.getBytes();
+                exchange.sendResponseHeaders(200, bytes.length);
+                exchange.getResponseBody().write(bytes);
+            } else {
+                exchange.sendResponseHeaders(405, -1);
             }
-            String response = "[" + String.join(",", mensajes) + "]";
-            exchange.sendResponseHeaders(200, response.length());
-            exchange.getResponseBody().write(response.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+            String errorJson = "{\"error\":\"" + e.getMessage() + "\"}";
+            byte[] bytes = errorJson.getBytes();
+            exchange.sendResponseHeaders(500, bytes.length);
+            exchange.getResponseBody().write(bytes);
+        } finally {
             exchange.close();
         }
     }
 }
+
+
