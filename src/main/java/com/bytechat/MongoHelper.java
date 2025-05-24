@@ -5,7 +5,8 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 
 public class MongoHelper {
-    private static final String CONNECTION_STRING = "mongodb+srv://carlosenmanuelorozcon:InserteContrasena@bytechat.tkpe3ym.mongodb.net/?retryWrites=true&w=majority&appName=bytechat";
+    // Se obtiene desde una variable de entorno segura
+    private static final String CONNECTION_STRING = System.getenv("MONGO_URI");
 
     public static MongoDatabase getDatabase() {
         MongoClient client = MongoClients.create(CONNECTION_STRING);
