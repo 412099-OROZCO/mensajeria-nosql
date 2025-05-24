@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: bytechat-g8
+    env: java
+    buildCommand: "mvn clean package"
+    startCommand: "java -cp target/classes com.bytechat.Main"
+    envVars:
+      - key: MONGO_URI
+        sync: false
